@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Contact Form</title>
+
+    <style>
+      * {
+        background-color: rgb(221, 237, 239);
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        margin-top: 50px;
+        padding: 20px; /* Add padding for better mobile spacing */
+        box-sizing: border-box; /* Ensure padding doesn't affect width */
+      }
+      form {
+        font-family: Arial, sans-serif;
+        color: #615d5d;
+        font-weight: bold;
+      }
+
+      input[type='text'],
+      input[type='email'],
+      input[type='text'], /* Add this line to style the "Age" input */
+      input[type='submit'] {
+        width: 100%;
+        background-color: white;
+        padding: 12px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+
+      input[type='submit'] {
+        background-color: #29aba4;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      input[type='submit']:hover {
+        background-color: #89b9cc;
+      }
+
+      /* Media queries for responsiveness */
+      @media screen and (max-width: 768px) {
+        .container {
+          width: 90%; /* Adjust the width for smaller screens */
+        }
+
+        input[type='text'],
+        input[type='email'],
+        input[type='text'],
+        input[type='submit'] {
+          width: 100%;
+          font-size: 16px; /* Increase font size for smaller screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FORM -->
+    <div class="container">
+      <form id="contactForm">
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" /><br />
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" /><br />
+        <label for="age">Age:</label><br />
+        <input type="text" id="age" /><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <script>
+      const contactForm = document.getElementById('contactForm');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const ageInput = document.getElementById('age');
+
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await fetch('/send-message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+            age: ageInput.value,
+          }),
+        });
+
+        nameInput.value = '';
+        emailInput.value = '';
+        ageInput.value = '';
+
+        // Show a pop-up message
+        alert('Form submitted successfully. Thanks!');
+      });
+    </script>
+  </body>
+</html>
+
+
